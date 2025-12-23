@@ -89,3 +89,31 @@ a:hover {
   color: var(--accent-color);
   text-decoration-color: var(--accent-color);
 }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  width: 100%;              /* full width of viewport */
+  z-index: 1000;
+  background-color: var(--bg-color);
+  padding: 0.75rem 0;       /* vertical padding */
+  border-bottom: none;      /* remove the green line */
+  text-align: center;       /* center all content inside */
+}
+
+.site-header p {
+  margin: 0;                /* remove default paragraph margin */
+}
+
+.site-header a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.site-header a:hover {
+  color: var(--accent-color);
+}
+
+
