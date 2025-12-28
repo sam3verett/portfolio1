@@ -62,11 +62,10 @@ ul {
   padding-left: 0;
 }
 
-.links li,
-.works li,
-.experience li {
+section li {
   margin-bottom: 0.75rem;
 }
+
 
 footer {
   margin-top: 3rem;
