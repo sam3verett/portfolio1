@@ -100,7 +100,6 @@ a:hover {
   /* Safe-area support for iOS (Dynamic Island / notch) */
   padding-top: calc(env(safe-area-inset-top) + 0.75rem);
   padding-bottom: 0.75rem;
-  margin-top: calc(-1 * env(safe-area-inset-top));
 
   border-bottom: none;      /* remove the green line */
   text-align: center;       /* center all content inside */
