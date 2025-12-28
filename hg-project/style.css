@@ -30,7 +30,7 @@ body {
   padding: 2rem;
   background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: "Courier New", Courier, monospace;
+  font-family: "Baskerville", "Baskerville Old Face", "Libre Baskerville", "Times New Roman", serif;
   line-height: 1.7;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
