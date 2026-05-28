@@ -5,58 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/gonnacry.png">
 
-  <!--
-  ═══════════════════════════════════════════════════════════════
-   YOUR PERSONAL SITE — desktop OS edition
-   ---------------------------------------------------------------
-   This is a self-contained file. No build step, no npm install.
-   Just edit and push to GitHub Pages.
-
-   QUICK CUSTOMIZATION CHECKLIST:
-   1. Change <title> and the .site-title in the taskbar below
-   2. Edit the CONTENT object (line ~170) with your real info
-   3. Tweak ITEMS / WINS if you want to rename or add windows
-   4. Adjust CSS variables under :root to change colors/fonts
-  ═══════════════════════════════════════════════════════════════
-  -->
-
   <title>sam everett</title>
   <meta name="description" content="sam's corner of the internet" />
 
-  <!-- Tabler Icons (5000+ outline icons, free) -->
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" />
 
-  <!-- Google Fonts — swap these out freely -->
-  <!-- Current pairing: EB Garamond (serif body) + DM Mono (system/UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap"
     rel="stylesheet" />
 
-  <!-- React + Babel (no build step needed) -->
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
   <style>
-    /* ─── Reset ──────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ─── Design tokens ──────────────────────────────────────── */
-    /*
-      COLORS — change these to repaint the whole site instantly.
-
-      --desk-bg   : the desktop background (currently warm taupe)
-      --win-bg    : window interior background
-      --win-head  : window title bar background
-      --bar-bg    : taskbar background
-      --border    : window/UI border color
-      --txt       : main text color
-      --txt-muted : secondary / muted text
-    */
     :root {
-      /* Light mode */
       --desk-bg:    #577b5b;
       --win-bg:     #f9f5f0;
       --win-head:   #eee8df;
@@ -64,24 +31,41 @@
       --border:     rgba(0, 0, 0, 0.15);
       --txt:        #26221e;
       --txt-muted:  #7d756c;
-
-      /* Fonts */
       --font-ui:    'DM Mono', monospace;
       --font-body:  "Baskervville", Georgia, serif;
-
-      /* Traffic light colors — change these if you want a different accent */
       --btn-red:    #d45b5b;
       --btn-yellow: #d4a832;
       --btn-green:  #5aad6e;
-
-      /* Taskbar height */
       --bar-h:      40px;
     }
 
-    #98A7A0
-    
+    #desktop {
+      position: fixed;
+      inset: 0;
+      bottom: var(--bar-h);
+      overflow: hidden;
+      background-image: url('wallpaper-3.jpeg');
+      background-size: cover;
+      background-position: center;
+    }
 
-    /* ─── Base ───────────────────────────────────────────────── */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --desk-bg:   #1c1a17;
+        --win-bg:    #252220;
+        --win-head:  #2e2b27;
+        --bar-bg:    #1c1a17;
+        --border:    rgba(255, 255, 255, 0.1);
+        --txt:       #e4ddd4;
+        --txt-muted: #9a8e84;
+      }
+      #desktop {
+        background-image: url('wallpaper-2.jpeg');
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
     html, body { height: 100%; overflow: hidden; }
 
     body {
@@ -91,44 +75,10 @@
       color: var(--txt);
       user-select: none;
       cursor: default;
+      /* ↓ prevents pull-to-refresh on mobile */
+      overscroll-behavior: none;
     }
 
-    /* ─── Custom cursor ──────────────────────────────────────── */
-    /* Uncomment to enable a custom cursor image:
-    body { cursor: url('cursor.png'), auto; }
-    */
-
-    /* ─── Desktop ─────────────────────────────────────────────── */
-    #desktop {
-      position: fixed;
-      inset: 0;
-      bottom: var(--bar-h);
-      overflow: hidden;
-
-      background-image: url('wallpaper-3.jpeg');
-  background-size: cover;
-  background-position: center;
-    }
-
-  @media (prefers-color-scheme: dark) {
-      :root {
-        --desk-bg:    #1c1a17;
-        --win-bg:     #252220;
-        --win-head:   #2e2b27;
-        --bar-bg:      #1c1a17;
-        --border:     rgba(255, 255, 255, 0.1);
-        --txt:        #e4ddd4;
-        --txt-muted:  #9a8e84;
-      }
-
-      #desktop {
-    background-image: url('wallpaper-2.jpeg');
-    background-size: cover;
-  background-position: center;
-  }
-    }
-
-    /* ─── Desktop icons ──────────────────────────────────────── */
     .icon-grid {
       position: absolute;
       top: 14px;
@@ -172,7 +122,6 @@
       word-break: break-all;
     }
 
-    /* ─── Windows ────────────────────────────────────────────── */
     .window {
       position: absolute;
       background: var(--win-bg);
@@ -231,11 +180,9 @@
       flex: 1;
     }
 
-    /* Thin scrollbar */
     .window-body::-webkit-scrollbar { width: 4px; }
     .window-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-    /* ─── Taskbar ─────────────────────────────────────────────── */
     #taskbar {
       position: fixed;
       bottom: 0;
@@ -291,7 +238,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ─── Window content helpers ─────────────────────────────── */
     .mono {
       font-family: var(--font-ui);
       font-size: 12.5px;
@@ -321,7 +267,6 @@
     }
 
     .file-row:hover { background: rgba(128, 120, 110, 0.11); }
-
     .file-row .file-icon { font-size: 14px; flex-shrink: 0; }
     .file-row .file-name { flex: 1; }
     .file-row .file-note { font-size: 11px; color: var(--txt-muted); }
@@ -344,7 +289,6 @@
       margin: 12px 0 5px;
     }
 
-    /* Empty state */
     .empty-hint {
       position: absolute;
       top: 46%;
@@ -362,7 +306,6 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
 
-    /* ─── Responsive ─────────────────────────────────────────── */
     @media (max-width: 600px) {
       .desk-icon { width: 60px; }
       .desk-icon .icon-label { font-size: 9.5px; }
@@ -371,7 +314,6 @@
 </head>
 <body>
 
-  
   <div id="taskbar-root"></div>
   <div id="root" style="display:none"></div>
 
@@ -418,11 +360,11 @@ after this: not sure yet. maybe law school. maybe an mfa. maybe the peace corps.
             a work in progress is still work.
           </p>
           <div className="file-list">
-            <FileRow icon="ti-file-text" name="the_novel.docx"               note="today"                  />
-            <FileRow icon="ti-file-text" name="fragment_for_grandmother.txt"  note="last week"              />
-            <FileRow icon="ti-file-text" name="short_story_wip.docx"          note="2 days ago"             />
-            <FileRow icon="ti-folder"    name="poem_drafts/"                  note="ongoing"    folderColor />
-            <FileRow icon="ti-folder"    name="essays_and_criticism/"         note="ongoing"    folderColor />
+            <FileRow icon="ti-file-text" name="the_novel.docx"               note="today"                 />
+            <FileRow icon="ti-file-text" name="fragment_for_grandmother.txt"  note="last week"             />
+            <FileRow icon="ti-file-text" name="short_story_wip.docx"          note="2 days ago"            />
+            <FileRow icon="ti-folder"    name="poem_drafts/"                  note="ongoing"   folderColor />
+            <FileRow icon="ti-folder"    name="essays_and_criticism/"         note="ongoing"   folderColor />
             <FileRow icon="ti-folder"    name="abandoned_projects/"           note="they always come back" folderColor />
           </div>
           <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginTop: 14, fontStyle: 'italic' }}>
@@ -511,7 +453,6 @@ favorites
         const onMove = (e) => {
           if (!dragRef.current) return;
           const { id, sx, sy, ox, oy } = dragRef.current;
-          // works for both mouse events and touch events
           const point = e.touches ? e.touches[0] : e;
           setWindows(ws => ws.map(w =>
             w.id === id
@@ -523,7 +464,7 @@ favorites
 
         document.addEventListener('mousemove', onMove);
         document.addEventListener('mouseup',   onUp);
-        document.addEventListener('touchmove', onMove, { passive: false }); // passive: false lets us preventDefault
+        document.addEventListener('touchmove', onMove, { passive: false });
         document.addEventListener('touchend',  onUp);
 
         return () => {
@@ -548,13 +489,20 @@ favorites
           return;
         }
         zRef.current += 1;
-        setWindows(ws => [...ws, { id, ...WINS[id], z: zRef.current, minimized: false }]);
+        const def = WINS[id];
+        const mobile = window.innerWidth < 600;
+        // on mobile: size the window to fit the screen and center it
+        // on desktop: use the default position and size
+        const w = mobile ? Math.min(window.innerWidth - 24, def.w) : def.w;
+        const h = mobile ? Math.min(window.innerHeight - 100, def.h) : def.h;
+        const x = mobile ? (window.innerWidth - w) / 2 : def.x;
+        const y = mobile ? (window.innerHeight - h) / 3 : def.y;
+        setWindows(ws => [...ws, { id, title: def.title, w, h, x, y, z: zRef.current, minimized: false }]);
       };
 
       const closeWin    = (id) => setWindows(ws => ws.filter(w => w.id !== id));
       const minimizeWin = (id) => setWindows(ws => ws.map(w => w.id === id ? { ...w, minimized: true } : w));
 
-      // handles both mouse and touch — reads the right coordinates from whichever fired
       const startDrag = (e, id, ox, oy) => {
         e.preventDefault();
         e.stopPropagation();
@@ -565,8 +513,8 @@ favorites
 
       return (
         <>
-          {/* ── Desktop area ── */}
-          <div id="desktop">
+          {/* ── Desktop area — onTouchMove blocks page scroll while dragging ── */}
+          <div id="desktop" onTouchMove={(e) => e.preventDefault()}>
 
             {/* Icons */}
             <div className="icon-grid">
