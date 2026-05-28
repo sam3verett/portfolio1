@@ -1,63 +1,677 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>sam everett</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="/gonnacry.png">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <!--
+  ═══════════════════════════════════════════════════════════════
+   YOUR PERSONAL SITE — desktop OS edition
+   ---------------------------------------------------------------
+   This is a self-contained file. No build step, no npm install.
+   Just edit and push to GitHub Pages.
 
-  <link rel="stylesheet" href="style.css">
+   QUICK CUSTOMIZATION CHECKLIST:
+   1. Change <title> and the .site-title in the taskbar below
+   2. Edit the CONTENT object (line ~170) with your real info
+   3. Tweak ITEMS / WINS if you want to rename or add windows
+   4. Adjust CSS variables under :root to change colors/fonts
+  ═══════════════════════════════════════════════════════════════
+  -->
+
+  <title>sam everett</title>
+  <meta name="description" content="sam's corner of the internet" />
+
+  <!-- Tabler Icons (5000+ outline icons, free) -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" />
+
+  <!-- Google Fonts — swap these out freely -->
+  <!-- Current pairing: EB Garamond (serif body) + DM Mono (system/UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet" />
+
+  <!-- React + Babel (no build step needed) -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+
+  <style>
+    /* ─── Reset ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── Design tokens ──────────────────────────────────────── */
+    /*
+      COLORS — change these to repaint the whole site instantly.
+
+      --desk-bg   : the desktop background (currently warm taupe)
+      --win-bg    : window interior background
+      --win-head  : window title bar background
+      --bar-bg    : taskbar background
+      --border    : window/UI border color
+      --txt       : main text color
+      --txt-muted : secondary / muted text
+    */
+    :root {
+      /* Light mode */
+      --desk-bg:    #98A7A0;
+      --win-bg:     #f9f5f0;
+      --win-head:   #eee8df;
+      --bar-bg:     #577b5b;
+      --border:     rgba(0, 0, 0, 0.15);
+      --txt:        #26221e;
+      --txt-muted:  #7d756c;
+
+      /* Fonts */
+      --font-ui:    'DM Mono', monospace;
+      --font-body:  "Baskervville", Georgia, serif;
+
+      /* Traffic light colors — change these if you want a different accent */
+      --btn-red:    #d45b5b;
+      --btn-yellow: #d4a832;
+      --btn-green:  #5aad6e;
+
+      /* Taskbar height */
+      --bar-h:      40px;
+    }
+
+    
+    
+
+    /* ─── Base ───────────────────────────────────────────────── */
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      background: var(--desk-bg);
+      color: var(--txt);
+      user-select: none;
+      cursor: default;
+    }
+
+    /* ─── Custom cursor ──────────────────────────────────────── */
+    /* Uncomment to enable a custom cursor image:
+    body { cursor: url('cursor.png'), auto; }
+    */
+
+    /* ─── Desktop ─────────────────────────────────────────────── */
+    #desktop {
+      position: fixed;
+      inset: 0;
+      bottom: var(--bar-h);
+      overflow: hidden;
+
+      background-image: url('wallpaper-3.jpeg');
+  background-size: cover;
+  background-position: center;
+    }
+
+  @media (prefers-color-scheme: dark) {
+      :root {
+        --desk-bg:    #1c1a17;
+        --win-bg:     #252220;
+        --win-head:   #2e2b27;
+        --bar-bg:      #1c1a17;
+        --border:     rgba(255, 255, 255, 0.1);
+        --txt:        #e4ddd4;
+        --txt-muted:  #9a8e84;
+      }
+
+      #desktop {
+    background-image: url('wallpaper-2.jpeg');
+    background-size: cover;
+  background-position: center;
+  }
+    }
+
+    /* ─── Desktop icons ──────────────────────────────────────── */
+    .icon-grid {
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 5;
+    }
+
+    .desk-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 8px 6px;
+      width: 76px;
+      border-radius: 9px;
+      cursor: default;
+      transition: background 0.12s;
+    }
+
+    .desk-icon:hover,
+    .desk-icon:focus {
+      background: rgba(255, 255, 255, 0.2);
+      outline: none;
+    }
+
+    .desk-icon .icon-img {
+      font-size: 28px;
+      color: rgba(255, 255, 255, 0.93);
+      filter: drop-shadow(0 1px 4px rgba(0,0,0,0.45));
+    }
+
+    .desk-icon .icon-label {
+      font-size: 10.5px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.94);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+      line-height: 1.35;
+      word-break: break-all;
+    }
+
+    /* ─── Windows ────────────────────────────────────────────── */
+    .window {
+      position: absolute;
+      background: var(--win-bg);
+      border: 0.5px solid var(--border);
+      border-radius: 11px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 280px;
+    }
+
+    .window-titlebar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 11px;
+      background: var(--win-head);
+      border-bottom: 0.5px solid var(--border);
+      cursor: grab;
+      flex-shrink: 0;
+    }
+
+    .window-titlebar:active { cursor: grabbing; }
+
+    .window-title {
+      flex: 1;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--txt-muted);
+      font-weight: 400;
+      pointer-events: none;
+    }
+
+    .traffic-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: filter 0.1s;
+    }
+
+    .traffic-btn:hover { filter: brightness(1.15); }
+    .btn-close  { background: var(--btn-red); }
+    .btn-min    { background: var(--btn-yellow); }
+    .btn-zoom   { background: var(--btn-green); }
+
+    .window-body {
+      overflow-y: auto;
+      padding: 16px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--txt);
+      flex: 1;
+    }
+
+    /* Thin scrollbar */
+    .window-body::-webkit-scrollbar { width: 4px; }
+    .window-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ─── Taskbar ─────────────────────────────────────────────── */
+    #taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: var(--bar-h);
+      background: var(--bar-bg);
+      border-top: 0.5px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 14px;
+      z-index: 9999;
+    }
+
+    .taskbar-logo {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+
+    .taskbar-btn {
+      padding: 3px 11px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-family: var(--font-ui);
+      border: 0.5px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: filter 0.1s;
+    }
+
+    .taskbar-btn:hover { filter: brightness(1.14); }
+
+    .taskbar-btn.active {
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .taskbar-btn.minimized {
+      color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .taskbar-time {
+      margin-left: auto;
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.65);
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ─── Window content helpers ─────────────────────────────── */
+    .mono {
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      line-height: 2;
+      white-space: pre-wrap;
+    }
+
+    .prose {
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      line-height: 2;
+      white-space: pre-wrap;
+    }
+
+    .file-list { display: flex; flex-direction: column; gap: 1px; }
+
+    .file-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-family: var(--font-ui);
+      font-size: 12.5px;
+      color: var(--txt);
+      transition: background 0.1s;
+    }
+
+    .file-row:hover { background: rgba(128, 120, 110, 0.11); }
+
+    .file-row .file-icon { font-size: 14px; flex-shrink: 0; }
+    .file-row .file-name { flex: 1; }
+    .file-row .file-note { font-size: 11px; color: var(--txt-muted); }
+
+    .finder-bar {
+      background: rgba(128, 120, 110, 0.09);
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--txt-muted);
+      margin-bottom: 12px;
+    }
+
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--txt-muted);
+      margin: 12px 0 5px;
+    }
+
+    /* Empty state */
+    .empty-hint {
+      position: absolute;
+      top: 46%;
+      left: 56%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .empty-hint .star { font-size: 24px; margin-bottom: 7px; }
+    .empty-hint .hint-text {
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      .desk-icon { width: 60px; }
+      .desk-icon .icon-label { font-size: 9.5px; }
+    }
+  </style>
 </head>
 <body>
 
+  
+  <div id="taskbar-root"></div>
+  <div id="root" style="display:none"></div>
 
-<main class="container">
+  <script type="text/babel">
+    const { useState, useRef, useEffect } = React;
 
-  <main class="container">
-    
+    /* ═══════════════════════════════════════════════════════════
+       DESKTOP ICONS
+       Each entry becomes an icon on the desktop.
+       - id     : unique key, must match an entry in WINS + CONTENT
+       - label  : filename shown under the icon
+       - icon   : Tabler icon class name (see tabler-icons.io)
+    ═══════════════════════════════════════════════════════════ */
+    const ITEMS = [
+      { id: "about",    label: "about",    icon: "ti-file-text" },
+      { id: "writing",  label: "writing",     icon: "ti-folder"    },
+      { id: "research", label: "research",    icon: "ti-folder"    },
+      { id: "reading",  label: "reading",  icon: "ti-file-text" },
+      { id: "contact",  label: "contact", icon: "ti-world"     },
+    ];
 
-        <h1>Sam Everett</h1>
+    /* ═══════════════════════════════════════════════════════════
+       WINDOW SIZES & POSITIONS
+       - title : shown in the title bar
+       - w, h  : initial width and content-area height in pixels
+       - x, y  : initial position from top-left of desktop
+    ═══════════════════════════════════════════════════════════ */
+    const WINS = {
+      about:    { title: "about.txt",    w: 390, h: 265, x: 90,  y: 55  },
+      writing:  { title: "writing/",     w: 430, h: 305, x: 118, y: 76  },
+      research: { title: "research/",    w: 415, h: 290, x: 146, y: 100 },
+      reading:  { title: "reading.txt",  w: 372, h: 285, x: 174, y: 125 },
+      contact:  { title: "contact.html", w: 352, h: 225, x: 200, y: 150 },
+    };
 
- <p>Poet & aspiring law student in DFW. Reach me at <strong> samuel.s.everett [at] tcu [dot] edu</strong> 
-      </p>
+    /* ═══════════════════════════════════════════════════════════
+       WINDOW CONTENT
+       Each key is a React component. Edit freely — use any HTML
+       you like here. The window-body class gives you serif body
+       text by default; add className="mono" for monospaced.
 
-      <img src=/images/IMG_5340.JPG width="100%">
+       You can also load your existing HTML files in an <iframe>:
+         <iframe src="about.html" style={{width:'100%',height:240,border:'none'}} />
+    ═══════════════════════════════════════════════════════════ */
+    const CONTENT = {
+
+      about: () => (
+        <div className="prose">
+{`hey, i'm sam.
+
+undergraduate at texas christian university — b.a. sociology + english literature, b.s. digital culture + data analytics. graduating May 2028.
+
+i think a lot about: how the law makes people, what it means to actually finish a story, why some places feel like they're holding their breath.
+
+currently: tech writer intern @cloudflare, research assistant (incarceration, civic engagement, cultural preservation), aspiring novelist, chronic reader.
+
+after this: not sure yet. maybe law school. maybe an mfa. maybe the peace corps. hopefully all three?
+
+✦ click the other files to explore.`}
+        </div>
+      ),
+
+      writing: () => (
+        <div>
+          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginBottom: 14, fontStyle: 'italic' }}>
+            a work in progress is still work.
+          </p>
+          <div className="file-list">
+            <FileRow icon="ti-file-text" name="the_novel.docx"                note="today"      />
+            <FileRow icon="ti-file-text" name="fragment_for_grandmother.txt"   note="last week"  />
+            <FileRow icon="ti-file-text" name="short_story_wip.docx"           note="2 days ago" />
+            <FileRow icon="ti-folder"    name="poem_drafts/"                   note="ongoing"    folderColor />
+            <FileRow icon="ti-folder"    name="essays_and_criticism/"          note="ongoing"    folderColor />
+            <FileRow icon="ti-folder"    name="abandoned_projects/"            note="they always come back" folderColor />
+          </div>
+          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginTop: 14, fontStyle: 'italic' }}>
+            (the novel is going. slowly. that's okay.)
+          </p>
+        </div>
+      ),
+
+      research: () => (
+        <div>
+          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginBottom: 14 }}>
+            social change & civic engagement cluster — TCU AddRan College
+          </p>
+          <div className="file-list">
+            <FileRow icon="ti-table"     name="grants_database.xlsx"     note="Arnold, MacArthur, Ford, OSF" />
+            <FileRow icon="ti-file-text" name="org_outreach_log.txt"     note="Lioness Alliance + others"    />
+            <FileRow icon="ti-folder"    name="incarceration_lit_review/" note="reading pile"  folderColor />
+            <FileRow icon="ti-folder"    name="voter_engagement_notes/"   note="civic cluster" folderColor />
+            <FileRow icon="ti-folder"    name="cultural_preservation/"    note="in progress"   folderColor />
+          </div>
+        </div>
+      ),
+
+      reading: () => (
+        <div className="prose">
+{`currently reading
+↳ Anna Badkhen - To See Beyond
+↳ Robert Chapman - Empire of Normality: Neurodiversity and Capitalism
+↳ Ocean Vuong - The Emperor of Gladness
+
+favorites
+↳ Leigh Bardugo - Six of Crows 
+↳ Kaveh Akbar — Martyr!
 
 
-<section class="current">
-    <h2>things I'm doing...</h2>
-    <ul>
-      <li>Pursuing my bachelor's degree in English Literature & Sociology at Texas Christian University.</li>
-      <li>Working on a few different projects that I hope will eventually become novels. Ask me about them :)
-      </li>
-      <li>Occasionally posting on my Substack, <a href="https://evergreendreams.substack.com" target="_blank">evergreen dreams</a>.</li>
-  </section>
-      
-
-<section class="current">
-    <h2>things I've made...</h2>
-    <ul>
-        <li><a href="/interview-story">Steady Ground to Stand On: A TCU Transfer Student's Experience</a> — interview on finding belonging in a new home & documenting the shortcomings of transfer student resources at my university</li>
-        <li><a href="/tm-visual-essay">Weathering the (Anti-Black) Weather</a> — visual essay on Toni Morrison</li>
-        <li><a href="https://sam3verett.github.io/hg-project/" target="_blank">Panem's Predatory Propaganda</a> — website built to analyze rhetoric and propaganda in the <em>Hunger Games</em> franchise</li>
-       <li><a href="https://coravany04.github.io/coding-project/" target="_blank">Audience Perceptions of Star Wars: The Rise of Skywalker</a> — wrote copy for and assisted in designing a website that analyzes fan reactions to <em>Star Wars</em> using Python</li>
-      
-  </section>
-
- 
 
 
+`}
+        </div>
+      ),
+
+      contact: () => (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+          
+          {[
+            { label: 'email',     val: 'samuel.s.everett [at] tcu [dot] edu',    icon: 'ti-mail'             },
+            { label: 'instagram', val: '@samsevr',         icon: 'ti-brand-instagram'  },
+          ].map(c => (
+            <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--txt)' }}>
+              <i className={`ti ${c.icon}`} style={{ fontSize: 16, color: 'var(--txt-muted)', width: 20, flexShrink: 0 }} aria-hidden="true" />
+              <span style={{ color: 'var(--txt-muted)', width: 68, fontSize: 12, flexShrink: 0, fontFamily: 'var(--font-ui)' }}>{c.label}</span>
+              <span>{c.val}</span>
+            </div>
+          ))}
+          
+        </div>
+      ),
+
+    }; /* ← end of CONTENT */
 
 
+    /* ─── FileRow helper ────────────────────────────────────── */
+    function FileRow({ icon, name, note, folderColor }) {
+      return (
+        <div className="file-row">
+          <i className={`ti ${icon} file-icon`}
+            style={{ color: folderColor ? '#c4a35a' : 'var(--txt-muted)' }}
+            aria-hidden="true" />
+          <span className="file-name">{name}</span>
+          {note && <span className="file-note">{note}</span>}
+        </div>
+      );
+    }
 
-     
-      
 
+    /* ═══════════════════════════════════════════════════════════
+       DESKTOP APP — you probably don't need to edit below here
+    ═══════════════════════════════════════════════════════════ */
+    function Desktop() {
+      const [windows, setWindows] = useState([]);
+      const [time, setTime] = useState(() =>
+        new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      );
+      const zRef   = useRef(10);
+      const dragRef = useRef(null);
 
+      /* Clock tick */
+      useEffect(() => {
+        const tick = setInterval(() =>
+          setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
+        , 15000);
+        return () => clearInterval(tick);
+      }, []);
 
+      /* Drag handlers */
+      useEffect(() => {
+        const onMove = (e) => {
+          if (!dragRef.current) return;
+          const { id, sx, sy, ox, oy } = dragRef.current;
+          setWindows(ws => ws.map(w =>
+            w.id === id
+              ? { ...w, x: Math.max(0, ox + e.clientX - sx), y: Math.max(0, oy + e.clientY - sy) }
+              : w
+          ));
+        };
+        const onUp = () => { dragRef.current = null; };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup',   onUp);
+        return () => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup',   onUp);
+        };
+      }, []);
 
+      /* Window management */
+      const bringToFront = (id) => {
+        zRef.current += 1;
+        const z = zRef.current;
+        setWindows(ws => ws.map(w => w.id === id ? { ...w, z } : w));
+      };
 
+      const openWindow = (id) => {
+        if (windows.find(w => w.id === id)) {
+          setWindows(ws => ws.map(w => w.id === id ? { ...w, minimized: false } : w));
+          bringToFront(id);
+          return;
+        }
+        zRef.current += 1;
+        setWindows(ws => [...ws, { id, ...WINS[id], z: zRef.current, minimized: false }]);
+      };
 
+      const closeWin    = (id) => setWindows(ws => ws.filter(w => w.id !== id));
+      const minimizeWin = (id) => setWindows(ws => ws.map(w => w.id === id ? { ...w, minimized: true } : w));
 
+      const startDrag = (e, id, ox, oy) => {
+        e.preventDefault();
+        e.stopPropagation();
+        bringToFront(id);
+        dragRef.current = { id, sx: e.clientX, sy: e.clientY, ox, oy };
+      };
+
+      return (
+        <>
+          {/* ── Desktop area ── */}
+          <div id="desktop">
+
+            {/* Icons */}
+            <div className="icon-grid">
+              {ITEMS.map(item => (
+                <div
+                  key={item.id}
+                  className="desk-icon"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Open ${item.label}`}
+                  onClick={() => openWindow(item.id)}
+                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openWindow(item.id)}
+                >
+                  <i className={`ti ${item.icon} icon-img`} aria-hidden="true" />
+                  <span className="icon-label">{item.label}</span>
+                </div>
+              ))}
+            </div>
+
+           
+
+            {/* Windows */}
+            {windows.filter(w => !w.minimized).map(win => (
+              <div
+                key={win.id}
+                className="window"
+                style={{ left: win.x, top: win.y, width: win.w, zIndex: win.z }}
+                onMouseDown={() => bringToFront(win.id)}
+              >
+                <div
+                  className="window-titlebar"
+                  onMouseDown={(e) => startDrag(e, win.id, win.x, win.y)}
+                >
+                  <button className="traffic-btn btn-close"
+                    onClick={(e) => { e.stopPropagation(); closeWin(win.id); }}
+                    aria-label="Close window" />
+                  <button className="traffic-btn btn-min"
+                    onClick={(e) => { e.stopPropagation(); minimizeWin(win.id); }}
+                    aria-label="Minimize window" />
+                  <button className="traffic-btn btn-zoom"
+                    aria-label="Zoom window" />
+                  <span className="window-title">{win.title}</span>
+                </div>
+                <div className="window-body" style={{ height: win.h }}>
+                  {CONTENT[win.id] && CONTENT[win.id]()}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ── Taskbar ── */}
+          <div id="taskbar">
+            {/* ↓ Change this to whatever you want to call your site */}
+            <span className="taskbar-logo">✦</span>
+            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginRight: 4, fontFamily: 'var(--font-ui)' }}>
+              sam's place
+            </span>
+
+            {windows.map(win => (
+              <button
+                key={win.id}
+                className={`taskbar-btn ${win.minimized ? 'minimized' : 'active'}`}
+                onClick={() => {
+                  setWindows(ws => ws.map(w => w.id === win.id ? { ...w, minimized: false } : w));
+                  bringToFront(win.id);
+                }}
+              >
+                {WINS[win.id].title}
+              </button>
+            ))}
+
+            <span className="taskbar-time">{time}</span>
+          </div>
+        </>
+      );
+    }
+
+    /* Mount */
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    ReactDOM.createRoot(container).render(<Desktop />);
+  </script>
+
+</body>
+</html>
