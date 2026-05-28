@@ -57,7 +57,7 @@
     */
     :root {
       /* Light mode */
-      --desk-bg:    #98A7A0;
+      --desk-bg:    #577b5b;
       --win-bg:     #f9f5f0;
       --win-head:   #eee8df;
       --bar-bg:     #577b5b;
@@ -78,7 +78,7 @@
       --bar-h:      40px;
     }
 
-    
+    #98A7A0
     
 
     /* ─── Base ───────────────────────────────────────────────── */
@@ -378,27 +378,14 @@
   <script type="text/babel">
     const { useState, useRef, useEffect } = React;
 
-    /* ═══════════════════════════════════════════════════════════
-       DESKTOP ICONS
-       Each entry becomes an icon on the desktop.
-       - id     : unique key, must match an entry in WINS + CONTENT
-       - label  : filename shown under the icon
-       - icon   : Tabler icon class name (see tabler-icons.io)
-    ═══════════════════════════════════════════════════════════ */
     const ITEMS = [
       { id: "about",    label: "about",    icon: "ti-file-text" },
-      { id: "writing",  label: "writing",     icon: "ti-folder"    },
-      { id: "research", label: "research",    icon: "ti-folder"    },
+      { id: "writing",  label: "writing",  icon: "ti-folder"    },
+      { id: "research", label: "research", icon: "ti-folder"    },
       { id: "reading",  label: "reading",  icon: "ti-file-text" },
-      { id: "contact",  label: "contact", icon: "ti-world"     },
+      { id: "contact",  label: "contact",  icon: "ti-world"     },
     ];
 
-    /* ═══════════════════════════════════════════════════════════
-       WINDOW SIZES & POSITIONS
-       - title : shown in the title bar
-       - w, h  : initial width and content-area height in pixels
-       - x, y  : initial position from top-left of desktop
-    ═══════════════════════════════════════════════════════════ */
     const WINS = {
       about:    { title: "about.txt",    w: 390, h: 265, x: 90,  y: 55  },
       writing:  { title: "writing/",     w: 430, h: 305, x: 118, y: 76  },
@@ -407,15 +394,6 @@
       contact:  { title: "contact.html", w: 352, h: 225, x: 200, y: 150 },
     };
 
-    /* ═══════════════════════════════════════════════════════════
-       WINDOW CONTENT
-       Each key is a React component. Edit freely — use any HTML
-       you like here. The window-body class gives you serif body
-       text by default; add className="mono" for monospaced.
-
-       You can also load your existing HTML files in an <iframe>:
-         <iframe src="about.html" style={{width:'100%',height:240,border:'none'}} />
-    ═══════════════════════════════════════════════════════════ */
     const CONTENT = {
 
       about: () => (
@@ -440,12 +418,12 @@ after this: not sure yet. maybe law school. maybe an mfa. maybe the peace corps.
             a work in progress is still work.
           </p>
           <div className="file-list">
-            <FileRow icon="ti-file-text" name="the_novel.docx"                note="today"      />
-            <FileRow icon="ti-file-text" name="fragment_for_grandmother.txt"   note="last week"  />
-            <FileRow icon="ti-file-text" name="short_story_wip.docx"           note="2 days ago" />
-            <FileRow icon="ti-folder"    name="poem_drafts/"                   note="ongoing"    folderColor />
-            <FileRow icon="ti-folder"    name="essays_and_criticism/"          note="ongoing"    folderColor />
-            <FileRow icon="ti-folder"    name="abandoned_projects/"            note="they always come back" folderColor />
+            <FileRow icon="ti-file-text" name="the_novel.docx"               note="today"                  />
+            <FileRow icon="ti-file-text" name="fragment_for_grandmother.txt"  note="last week"              />
+            <FileRow icon="ti-file-text" name="short_story_wip.docx"          note="2 days ago"             />
+            <FileRow icon="ti-folder"    name="poem_drafts/"                  note="ongoing"    folderColor />
+            <FileRow icon="ti-folder"    name="essays_and_criticism/"         note="ongoing"    folderColor />
+            <FileRow icon="ti-folder"    name="abandoned_projects/"           note="they always come back" folderColor />
           </div>
           <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginTop: 14, fontStyle: 'italic' }}>
             (the novel is going. slowly. that's okay.)
@@ -459,8 +437,8 @@ after this: not sure yet. maybe law school. maybe an mfa. maybe the peace corps.
             social change & civic engagement cluster — TCU AddRan College
           </p>
           <div className="file-list">
-            <FileRow icon="ti-table"     name="grants_database.xlsx"     note="Arnold, MacArthur, Ford, OSF" />
-            <FileRow icon="ti-file-text" name="org_outreach_log.txt"     note="Lioness Alliance + others"    />
+            <FileRow icon="ti-table"     name="grants_database.xlsx"      note="Arnold, MacArthur, Ford, OSF" />
+            <FileRow icon="ti-file-text" name="org_outreach_log.txt"      note="Lioness Alliance + others"    />
             <FileRow icon="ti-folder"    name="incarceration_lit_review/" note="reading pile"  folderColor />
             <FileRow icon="ti-folder"    name="voter_engagement_notes/"   note="civic cluster" folderColor />
             <FileRow icon="ti-folder"    name="cultural_preservation/"    note="in progress"   folderColor />
@@ -476,22 +454,16 @@ after this: not sure yet. maybe law school. maybe an mfa. maybe the peace corps.
 ↳ Ocean Vuong - The Emperor of Gladness
 
 favorites
-↳ Leigh Bardugo - Six of Crows 
-↳ Kaveh Akbar — Martyr!
-
-
-
-
-`}
+↳ Leigh Bardugo - Six of Crows
+↳ Kaveh Akbar — Martyr!`}
         </div>
       ),
 
       contact: () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          
           {[
-            { label: 'email',     val: 'samuel.s.everett [at] tcu [dot] edu',    icon: 'ti-mail'             },
-            { label: 'instagram', val: '@samsevr',         icon: 'ti-brand-instagram'  },
+            { label: 'email',     val: 'samuel.s.everett [at] tcu [dot] edu', icon: 'ti-mail'            },
+            { label: 'instagram', val: '@samsevr',                            icon: 'ti-brand-instagram' },
           ].map(c => (
             <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--txt)' }}>
               <i className={`ti ${c.icon}`} style={{ fontSize: 16, color: 'var(--txt-muted)', width: 20, flexShrink: 0 }} aria-hidden="true" />
@@ -499,14 +471,12 @@ favorites
               <span>{c.val}</span>
             </div>
           ))}
-          
         </div>
       ),
 
     }; /* ← end of CONTENT */
 
 
-    /* ─── FileRow helper ────────────────────────────────────── */
     function FileRow({ icon, name, note, folderColor }) {
       return (
         <div className="file-row">
@@ -520,9 +490,6 @@ favorites
     }
 
 
-    /* ═══════════════════════════════════════════════════════════
-       DESKTOP APP — you probably don't need to edit below here
-    ═══════════════════════════════════════════════════════════ */
     function Desktop() {
       const [windows, setWindows] = useState([]);
       const [time, setTime] = useState(() =>
@@ -539,23 +506,31 @@ favorites
         return () => clearInterval(tick);
       }, []);
 
-      /* Drag handlers */
+      /* Drag handlers — works for both mouse and touch */
       useEffect(() => {
         const onMove = (e) => {
           if (!dragRef.current) return;
           const { id, sx, sy, ox, oy } = dragRef.current;
+          // works for both mouse events and touch events
+          const point = e.touches ? e.touches[0] : e;
           setWindows(ws => ws.map(w =>
             w.id === id
-              ? { ...w, x: Math.max(0, ox + e.clientX - sx), y: Math.max(0, oy + e.clientY - sy) }
+              ? { ...w, x: Math.max(0, ox + point.clientX - sx), y: Math.max(0, oy + point.clientY - sy) }
               : w
           ));
         };
         const onUp = () => { dragRef.current = null; };
+
         document.addEventListener('mousemove', onMove);
         document.addEventListener('mouseup',   onUp);
+        document.addEventListener('touchmove', onMove, { passive: false }); // passive: false lets us preventDefault
+        document.addEventListener('touchend',  onUp);
+
         return () => {
           document.removeEventListener('mousemove', onMove);
           document.removeEventListener('mouseup',   onUp);
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend',  onUp);
         };
       }, []);
 
@@ -579,11 +554,13 @@ favorites
       const closeWin    = (id) => setWindows(ws => ws.filter(w => w.id !== id));
       const minimizeWin = (id) => setWindows(ws => ws.map(w => w.id === id ? { ...w, minimized: true } : w));
 
+      // handles both mouse and touch — reads the right coordinates from whichever fired
       const startDrag = (e, id, ox, oy) => {
         e.preventDefault();
         e.stopPropagation();
         bringToFront(id);
-        dragRef.current = { id, sx: e.clientX, sy: e.clientY, ox, oy };
+        const point = e.touches ? e.touches[0] : e;
+        dragRef.current = { id, sx: point.clientX, sy: point.clientY, ox, oy };
       };
 
       return (
@@ -609,8 +586,6 @@ favorites
               ))}
             </div>
 
-           
-
             {/* Windows */}
             {windows.filter(w => !w.minimized).map(win => (
               <div
@@ -618,10 +593,12 @@ favorites
                 className="window"
                 style={{ left: win.x, top: win.y, width: win.w, zIndex: win.z }}
                 onMouseDown={() => bringToFront(win.id)}
+                onTouchStart={() => bringToFront(win.id)}
               >
                 <div
                   className="window-titlebar"
                   onMouseDown={(e) => startDrag(e, win.id, win.x, win.y)}
+                  onTouchStart={(e) => startDrag(e, win.id, win.x, win.y)}
                 >
                   <button className="traffic-btn btn-close"
                     onClick={(e) => { e.stopPropagation(); closeWin(win.id); }}
@@ -642,10 +619,9 @@ favorites
 
           {/* ── Taskbar ── */}
           <div id="taskbar">
-            {/* ↓ Change this to whatever you want to call your site */}
             <span className="taskbar-logo">✦</span>
             <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginRight: 4, fontFamily: 'var(--font-ui)' }}>
-              sam's place
+              samuel everett
             </span>
 
             {windows.map(win => (
