@@ -79,6 +79,15 @@
       overscroll-behavior: none;
     }
 
+    .window-body a {
+  color: var(--txt);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.window-body a:hover { color: var(--txt-muted); }
+
+.prose p { margin-bottom: 1.0em; }
+
     .icon-grid {
       position: absolute;
       top: 14px;
@@ -323,16 +332,16 @@
     const ITEMS = [
       { id: "about",    label: "about",    icon: "ti-file-text" },
       { id: "writing",  label: "writing",  icon: "ti-folder"    },
-      { id: "research", label: "research", icon: "ti-folder"    },
-      { id: "reading",  label: "reading",  icon: "ti-file-text" },
+      { id: "reading",  label: "reading",  icon: "ti-book" },
+      { id: "gallery", label: "gallery", icon: "ti-photo" },
       { id: "contact",  label: "contact",  icon: "ti-world"     },
     ];
 
     const WINS = {
       about:    { title: "about.txt",    w: 390, h: 265, x: 90,  y: 55  },
       writing:  { title: "writing/",     w: 430, h: 305, x: 118, y: 76  },
-      research: { title: "research/",    w: 415, h: 290, x: 146, y: 100 },
       reading:  { title: "reading.txt",  w: 372, h: 285, x: 174, y: 125 },
+      gallery: { title: "gallery/", w: 400, h: 310, x: 220, y: 170 },
       contact:  { title: "contact.html", w: 352, h: 225, x: 200, y: 150 },
     };
 
@@ -340,17 +349,17 @@
 
       about: () => (
         <div className="prose">
-{`hey, i'm sam
+<p><strong>sam everett</strong></p>
 
-undergraduate at texas christian university — b.a. sociology + english literature, b.s. digital culture + data analytics (graduating may 2028)
+<p>undergraduate at texas christian university — b.a. sociology + english literature, b.s. digital culture + data analytics (graduating may 2028)</p>
 
-i think a lot about: how the law makes people, what it means to actually finish a story, why some places feel like they're holding their breath
+<p>i think a lot about: how the law makes people, what a liminal space actually is, why some stories are never finished</p>
 
-currently: writing @evergreendreams, tech writer intern @cloudflare, editor-in-chief @tcubollerreview
+<p>currently: writing <a href="https://evergreendreams.substack.com" target="_blank">@evergreendreams</a>, tech writer intern <a href="https://www.cloudflare.com" target="_blank">@cloudflare</a>, editor-in-chief <a href="https://bollerreview.tcu.edu/index.php/boller" target="_blank">@tcubollerreview</a></p>
 
-after this: peace corps? law school? grad school? hopefully all three
+<p>after this: peace corps? law school? grad school? hopefully all three</p>
 
-✦ click the other files to explore`}
+<p>✦ click the other files to explore</p>
         </div>
       ),
 
@@ -373,20 +382,7 @@ after this: peace corps? law school? grad school? hopefully all three
         </div>
       ),
 
-      research: () => (
-        <div>
-          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginBottom: 14 }}>
-            social change & civic engagement cluster — TCU AddRan College
-          </p>
-          <div className="file-list">
-            <FileRow icon="ti-table"     name="grants_database.xlsx"      note="Arnold, MacArthur, Ford, OSF" />
-            <FileRow icon="ti-file-text" name="org_outreach_log.txt"      note="Lioness Alliance + others"    />
-            <FileRow icon="ti-folder"    name="incarceration_lit_review/" note="reading pile"  folderColor />
-            <FileRow icon="ti-folder"    name="voter_engagement_notes/"   note="civic cluster" folderColor />
-            <FileRow icon="ti-folder"    name="cultural_preservation/"    note="in progress"   folderColor />
-          </div>
-        </div>
-      ),
+      
 
       reading: () => (
         <div className="prose">
@@ -396,10 +392,15 @@ after this: peace corps? law school? grad school? hopefully all three
 ↳ Ocean Vuong - The Emperor of Gladness
 
 favorites
-↳ Leigh Bardugo - Six of Crows
-↳ Kaveh Akbar — Martyr!`}
+↳ Ursula K. Le Guin - A Wizard of Earthsea
+↳ Kaveh Akbar — Martyr! `}
         </div>
       ),
+
+
+gallery: () => <Gallery />,
+
+      
 
       contact: () => (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
@@ -418,6 +419,40 @@ favorites
 
     }; /* ← end of CONTENT */
 
+    // ─── add this function above FileRow ───────────────────────
+function Gallery() {
+  // ↓ put your image filenames here
+  const photos = [
+    'sam.jpeg',
+    'gal-1.jpg',
+    'gal-2.jpeg',
+    'gal-3.png',
+    'gal-4.PNG',
+    'gal-5.JPG',
+    'gal-6.JPG',
+    'gal-7.JPG',
+    'gal-8.JPG',
+  ];
+  const [idx, setIdx] = useState(0);
+  const prev = () => setIdx(i => (i - 1 + photos.length) % photos.length);
+  const next = () => setIdx(i => (i + 1) % photos.length);
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <img
+        src={photos[idx]}
+        style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 8 }}
+      />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <button onClick={prev} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--txt)' }}>←</button>
+        <span style={{ fontFamily: 'var(--font-ui)', fontSize: 11, color: 'var(--txt-muted)' }}>
+          {idx + 1} / {photos.length}
+        </span>
+        <button onClick={next} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--txt)' }}>→</button>
+      </div>
+    </div>
+  );
+}
 
     function FileRow({ icon, name, note, folderColor }) {
       return (
@@ -569,7 +604,7 @@ favorites
           <div id="taskbar">
             <span className="taskbar-logo">✦</span>
             <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginRight: 4, fontFamily: 'var(--font-ui)' }}>
-              samuel everett
+              samsevrOS
             </span>
 
             {windows.map(win => (
