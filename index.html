@@ -355,7 +355,7 @@
 
 <p><strong>i think a lot about:</strong> how the law makes people, what it means to live in liminal spaces, why some stories are never finished</p>
 
-<p><strong>currently:</strong> writing <a href="https://evergreendreams.substack.com" target="_blank">@evergreendreams</a>, tech writer intern <a href="https://www.cloudflare.com" target="_blank">@cloudflare</a>, editor-in-chief <a href="https://bollerreview.tcu.edu/index.php/boller" target="_blank">@tcubollerreview</a></p>
+<p><strong>currently:</strong> tech writer intern <a href="https://www.cloudflare.com" target="_blank">@cloudflare</a>, editor-in-chief <a href="https://bollerreview.tcu.edu/index.php/boller" target="_blank">@tcubollerreview</a></p>
 
 <p><strong>after this:</strong> peace corps? law school? grad school? hopefully all three</p>
 
@@ -364,20 +364,11 @@
       ),
 
       writing: () => (
-        <div>
-          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginBottom: 14, fontStyle: 'italic' }}>
-            things that don't make the substack...
-          </p>
-          <div className="file-list">
-            <FileRow icon="ti-file-text" name="the_novel.docx"               note="today"                 />
-            
-            <FileRow icon="ti-file-text" name="short_story_wip.docx"          note="2 days ago"            />
-            <FileRow icon="ti-folder"    name="poem_drafts/"                  note="ongoing"   folderColor />
-            <FileRow icon="ti-folder"    name="essays_and_criticism/"         note="ongoing"   folderColor />
-            <FileRow icon="ti-folder"    name="abandoned_projects/"           note="they always come back" folderColor />
-          </div>
-          <p style={{ fontFamily: 'var(--font-ui)', fontSize: 11.5, color: 'var(--txt-muted)', marginTop: 14, fontStyle: 'italic' }}>
-          </p>
+        <div className="prose">
+          <p><strong>things I've made and am working on</strong></p>
+
+<p><strong>substack:</strong> <a href="https://evergreendreams.substack.com" target="_blank">@evergreendreams</a> (most of my stuff goes here)</p>
+
         </div>
       ),
 
@@ -406,7 +397,7 @@ gallery: () => <Gallery />,
           {[
             { label: 'email',     val: 'samuel.s.everett [at] tcu [dot] edu', icon: 'ti-mail'            },
             { label: 'signal', val: '@samsevr.95',                            icon: 'ti-message-circle' },
-            { label: 'bluesky', val: '@samseverett.com',                            icon: 'ti-brand-bluesky' },
+            
           ].map(c => (
             <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--txt)' }}>
               <i className={`ti ${c.icon}`} style={{ fontSize: 16, color: 'var(--txt-muted)', width: 20, flexShrink: 0 }} aria-hidden="true" />
