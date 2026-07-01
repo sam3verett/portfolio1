@@ -1,28 +1,26 @@
 :root {
-  --bg-color: #f8f5f0;    
-  --text-color: #1b1b1b;  
-  --link-color: #2f5d50; 
-  --accent-color: #4f7c68; 
+  --bg-color: #f8f5f0;
+  --text-color: #1b1b1b;
+  --link-color: #2f5d50;
+  --accent-color: #4f7c68;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1f1f1f;     
-    --text-color: #f5f3ef;  
-    --link-color: #9cc3b1;   
-    --accent-color: #b9d2c3; 
+    --bg-color: #1f1f1f;
+    --text-color: #f5f3ef;
+    --link-color: #9cc3b1;
+    --accent-color: #b9d2c3;
   }
 }
-
 
 body {
   margin: 0;
   padding: 2rem;
   background-color: var(--bg-color);
   color: var(--text-color);
- font-family: "Baskerville", "Baskerville Old Face", "Libre Baskerville", "Times New Roman", serif;
+  font-family: "Baskerville", "Baskerville Old Face", "Libre Baskerville", "Times New Roman", serif;
   line-height: 1.7;
-  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .container {
@@ -44,18 +42,6 @@ h2 {
   margin-bottom: 1rem;
 }
 
-a {
-  color: var(--link-color);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-a:hover {
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-
 ul {
   list-style: none;
   padding-left: 0;
@@ -65,20 +51,12 @@ section li {
   margin-bottom: 0.75rem;
 }
 
-
-
 a {
   color: var(--link-color);
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
   text-decoration-color: var(--link-color);
-  transition: color 0.3s ease, text-decoration-color 0.3s ease;
-}
-
-a:hover {
-  color: var(--accent-color);
-  text-decoration-color: var(--accent-color);
 }
 
 

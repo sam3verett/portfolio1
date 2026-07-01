@@ -3,13 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="/gonnacry.png">
+  <link rel="icon" href="/gonnacry.jpg">
 
   <title>sam everett</title>
   <meta name="description" content="sam's corner of the internet" />
-
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +15,6 @@
 
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -64,6 +60,18 @@
         background-size: cover;
         background-position: center;
       }
+      .desk-icon .icon-img {
+        color: rgba(255, 255, 255, 0.96);
+        filter: drop-shadow(0 1px 6px rgba(0,0,0,0.7));
+      }
+      .desk-icon .icon-label {
+        color: rgba(255, 255, 255, 0.97);
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+      }
+      .desk-icon:hover,
+      .desk-icon:focus {
+        background: rgba(255, 255, 255, 0.15);
+      }
     }
 
     html, body { height: 100%; overflow: hidden; }
@@ -75,18 +83,23 @@
       color: var(--txt);
       user-select: none;
       cursor: default;
-      /* ↓ prevents pull-to-refresh on mobile */
       overscroll-behavior: none;
     }
 
     .window-body a {
-  color: var(--txt);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.window-body a:hover { color: var(--txt-muted); }
+      color: var(--txt);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .window-body a:hover { color: var(--txt-muted); }
 
-.prose p { margin-bottom: 1.0em; }
+    .prose {
+      font-family: var(--font-body);
+      font-size: 12.5px;
+      line-height: 2;
+      white-space: pre-wrap;
+    }
+    .prose p { margin-bottom: 1.0em; }
 
     .icon-grid {
       position: absolute;
@@ -107,7 +120,6 @@
       width: 76px;
       border-radius: 9px;
       cursor: default;
-      transition: background 0.12s;
     }
 
     .desk-icon:hover,
@@ -120,6 +132,7 @@
       font-size: 28px;
       color: rgba(255, 255, 255, 0.93);
       filter: drop-shadow(0 1px 4px rgba(0,0,0,0.45));
+      line-height: 1;
     }
 
     .desk-icon .icon-label {
@@ -171,7 +184,6 @@
       border: none;
       cursor: pointer;
       flex-shrink: 0;
-      transition: filter 0.1s;
     }
 
     .traffic-btn:hover { filter: brightness(1.15); }
@@ -224,7 +236,6 @@
       border: 0.5px solid rgba(255, 255, 255, 0.2);
       cursor: pointer;
       white-space: nowrap;
-      transition: filter 0.1s;
     }
 
     .taskbar-btn:hover { filter: brightness(1.14); }
@@ -247,75 +258,61 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .mono {
+    .gallery-img {
+      width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(0,0,0,0.06);
+    }
+
+    .gallery-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--txt);
+      padding: 4px 8px;
+    }
+
+    .gallery-pos {
       font-family: var(--font-ui);
-      font-size: 12.5px;
-      line-height: 2;
-      white-space: pre-wrap;
+      font-size: 11px;
+      color: var(--txt-muted);
     }
 
-    .prose {
-      font-family: var(--font-body);
-      font-size: 12.5px;
-      line-height: 2;
-      white-space: pre-wrap;
-    }
-
-    .file-list { display: flex; flex-direction: column; gap: 1px; }
-
-    .file-row {
+    .contact-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 8px;
-      border-radius: 5px;
-      font-family: var(--font-ui);
-      font-size: 12.5px;
+      gap: 10px;
+      font-size: 14px;
       color: var(--txt);
-      transition: background 0.1s;
     }
 
-    .file-row:hover { background: rgba(128, 120, 110, 0.11); }
-    .file-row .file-icon { font-size: 14px; flex-shrink: 0; }
-    .file-row .file-name { flex: 1; }
-    .file-row .file-note { font-size: 11px; color: var(--txt-muted); }
-
-    .finder-bar {
-      background: rgba(128, 120, 110, 0.09);
-      border-radius: 5px;
-      padding: 5px 10px;
-      font-family: var(--font-ui);
-      font-size: 11px;
-      color: var(--txt-muted);
-      margin-bottom: 12px;
-    }
-
-    .section-label {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 400;
-      color: var(--txt-muted);
-      margin: 12px 0 5px;
-    }
-
-    .empty-hint {
-      position: absolute;
-      top: 46%;
-      left: 56%;
-      transform: translate(-50%, -50%);
+    .contact-icon {
+      font-size: 16px;
+      width: 20px;
+      flex-shrink: 0;
       text-align: center;
-      pointer-events: none;
-      color: rgba(255,255,255,0.45);
+      line-height: 1;
     }
 
-    .empty-hint .star { font-size: 24px; margin-bottom: 7px; }
-    .empty-hint .hint-text {
+    .contact-label {
+      color: var(--txt-muted);
+      width: 68px;
       font-size: 12px;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      flex-shrink: 0;
+      font-family: var(--font-ui);
     }
 
     @media (max-width: 600px) {
+      #desktop { background-position: 70% center; }
       .desk-icon { width: 60px; }
       .desk-icon .icon-label { font-size: 9.5px; }
     }
@@ -323,142 +320,94 @@
 </head>
 <body>
 
-  <div id="taskbar-root"></div>
-  <div id="root" style="display:none"></div>
-
-  <script type="text/babel">
-    const { useState, useRef, useEffect } = React;
+  <script>
+    const { useState, useRef, useEffect, createElement: h } = React;
 
     const ITEMS = [
-      { id: "about",    label: "about",    icon: "ti-file-text" },
-      { id: "writing",  label: "writing",  icon: "ti-folder"    },
-      { id: "reading",  label: "reading",  icon: "ti-book" },
-      { id: "gallery", label: "gallery", icon: "ti-photo" },
-      { id: "contact",  label: "contact",  icon: "ti-world"     },
+      { id: "about",    label: "about",    icon: "\uD83D\uDCC4" },
+      { id: "writing",  label: "writing",  icon: "\uD83D\uDCC1" },
+      { id: "reading",  label: "reading",  icon: "\uD83D\uDCD6" },
+      { id: "gallery",  label: "gallery",  icon: "\uD83D\uDDBC\uFE0F" },
+      { id: "contact",  label: "contact",  icon: "\uD83C\uDF10" },
     ];
 
     const WINS = {
       about:    { title: "about.txt",    w: 390, h: 265, x: 90,  y: 55  },
       writing:  { title: "writing/",     w: 430, h: 305, x: 118, y: 76  },
       reading:  { title: "reading.txt",  w: 372, h: 285, x: 174, y: 125 },
-      gallery: { title: "gallery/", w: 400, h: 310, x: 220, y: 170 },
+      gallery:  { title: "gallery/",     w: 400, h: 310, x: 220, y: 170 },
       contact:  { title: "contact.html", w: 352, h: 225, x: 200, y: 150 },
     };
 
-    const CONTENT = {
-
-      about: () => (
-        <div className="prose">
-<p><strong>sam everett</strong></p>
-
-<p>undergraduate at texas christian university — b.a. english w/ global literature concentration, b.s. sociology w/ data analytics minor (graduating may 2028)</p>
-
-<p><strong>i think a lot about:</strong> how the law makes people, what it means to live in liminal spaces, why some stories are never finished</p>
-
-<p><strong>currently:</strong> intern <a href="https://www.cloudflare.com" target="_blank">@cloudflare</a>, editor-in-chief <a href="https://bollerreview.tcu.edu/index.php/boller" target="_blank">@tcubollerreview</a></p>
-
-<p><strong>after this:</strong> law school? grad school? who knows</p>
-
-<p>✦ click the other files to explore</p>
-        </div>
-      ),
-
-      writing: () => (
-        <div className="prose">
-          <p><strong>things I've made and am working on</strong></p>
-
-<p><strong>substack:</strong> <a href="https://evergreendreams.substack.com" target="_blank">@evergreendreams</a> (most of my stuff goes here)</p>
-<p>a novel based on the backrooms concept</p>
-<p><a href="/work/soci-policy.pdf" target="_blank">essay</a> on Kansas law & transgender drivers' licenses</p>
-
-        </div>
-      ),
-
-      
-
-      reading: () => (
-        <div className="prose">
-{`currently reading
-↳ Anna Badkhen - To See Beyond
-↳ Robert Chapman - Empire of Normality: Neurodiversity and Capitalism
-↳ Ocean Vuong - The Emperor of Gladness
-
-favorites
-↳ Ursula K. Le Guin - A Wizard of Earthsea
-↳ Kaveh Akbar — Martyr! `}
-        </div>
-      ),
-
-
-gallery: () => <Gallery />,
-
-      
-
-      contact: () => (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-          {[
-            { label: 'email',     val: 'samuel.s.everett [at] tcu [dot] edu', icon: 'ti-mail'            },
-            { label: 'signal', val: '@samsevr.95',                            icon: 'ti-message-circle' },
-            
-          ].map(c => (
-            <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 14, color: 'var(--txt)' }}>
-              <i className={`ti ${c.icon}`} style={{ fontSize: 16, color: 'var(--txt-muted)', width: 20, flexShrink: 0 }} aria-hidden="true" />
-              <span style={{ color: 'var(--txt-muted)', width: 68, fontSize: 12, flexShrink: 0, fontFamily: 'var(--font-ui)' }}>{c.label}</span>
-              <span>{c.val}</span>
-            </div>
-          ))}
-        </div>
-      ),
-
-    }; /* ← end of CONTENT */
-
-    // ─── add this function above FileRow ───────────────────────
-function Gallery() {
-  // ↓ put your image filenames here
-  const photos = [
-    'sam.jpeg',
-    'gal-1.jpg',
-    'gal-2.jpeg',
-    'gal-3.png',
-    'gal-4.PNG',
-    'gal-5.JPG',
-    'gal-6.JPG',
-    'gal-7.JPG',
-    'gal-8.JPG',
-  ];
-  const [idx, setIdx] = useState(0);
-  const prev = () => setIdx(i => (i - 1 + photos.length) % photos.length);
-  const next = () => setIdx(i => (i + 1) % photos.length);
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <img
-        src={photos[idx]}
-        style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 8 }}
-      />
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button onClick={prev} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--txt)' }}>←</button>
-        <span style={{ fontFamily: 'var(--font-ui)', fontSize: 11, color: 'var(--txt-muted)' }}>
-          {idx + 1} / {photos.length}
-        </span>
-        <button onClick={next} style={{ background: 'none', border: 'none', fontSize: 18, cursor: 'pointer', color: 'var(--txt)' }}>→</button>
-      </div>
-    </div>
-  );
-}
-
-    function FileRow({ icon, name, note, folderColor }) {
-      return (
-        <div className="file-row">
-          <i className={`ti ${icon} file-icon`}
-            style={{ color: folderColor ? '#c4a35a' : 'var(--txt-muted)' }}
-            aria-hidden="true" />
-          <span className="file-name">{name}</span>
-          {note && <span className="file-note">{note}</span>}
-        </div>
-      );
+    function a(href, label) {
+      return h('a', { href, target: '_blank' }, label);
     }
 
+    function strong(text) {
+      return h('strong', null, text);
+    }
+
+    const CONTENT = {
+      about: () => h('div', { className: 'prose' },
+        h('p', null, strong('sam everett')),
+        h('p', null, 'undergraduate at texas christian university \u2014 b.a. english w/ global literature concentration, b.s. sociology w/ data analytics minor (graduating may 2028)'),
+        h('p', null, strong('i think a lot about:'), ' how the law makes people, what it means to live in liminal spaces, why some stories are never finished'),
+        h('p', null, strong('currently:'), ' intern ', a('https://www.cloudflare.com', '@cloudflare'), ', editor-in-chief ', a('https://bollerreview.tcu.edu/index.php/boller', '@tcubollerreview')),
+        h('p', null, strong('after this:'), ' law school? grad school? who knows'),
+        h('p', null, '\u2726 click the other files to explore')
+      ),
+
+      writing: () => h('div', { className: 'prose' },
+        h('p', null, strong("things I've made and am working on")),
+        h('p', null, strong('substack:'), ' ', a('https://evergreendreams.substack.com', '@evergreendreams'), ' (most of my stuff goes here)'),
+        h('p', null, 'a novel based on the backrooms concept'),
+        h('p', null, a('/work/soci-policy.pdf', 'essay'), " on Kansas law & transgender drivers' licenses")
+      ),
+
+      reading: () => h('div', { className: 'prose' },
+        h('p', null, strong('currently reading')),
+        h('p', null, '\u21b3 Anna Badkhen \u2014 To See Beyond'),
+        h('p', null, '\u21b3 Robert Chapman \u2014 Empire of Normality: Neurodiversity and Capitalism'),
+        h('p', null, '\u21b3 Ocean Vuong \u2014 The Emperor of Gladness'),
+        h('p', null, strong('favorites')),
+        h('p', null, '\u21b3 Ursula K. Le Guin \u2014 A Wizard of Earthsea'),
+        h('p', null, '\u21b3 Kaveh Akbar \u2014 Martyr!')
+      ),
+
+      gallery: () => h(Gallery, null),
+
+      contact: () => h('div', { style: { display: 'flex', flexDirection: 'column', gap: 14 } },
+        [
+          { label: 'email',  val: 'samuel.s.everett [at] tcu [dot] edu', icon: '\u2709\uFE0F' },
+          { label: 'signal', val: '@samsevr.95',                          icon: '\uD83D\uDCAC' },
+        ].map(c =>
+          h('div', { key: c.label, className: 'contact-row' },
+            h('span', { className: 'contact-icon', 'aria-hidden': 'true' }, c.icon),
+            h('span', { className: 'contact-label' }, c.label),
+            h('span', null, c.val)
+          )
+        )
+      ),
+    };
+
+    function Gallery() {
+      const photos = [
+        'sam.jpeg', 'gal-1.jpg', 'gal-2.jpeg', 'gal-3.jpg',
+        'gal-4.jpg', 'gal-5.JPG', 'gal-6.JPG', 'gal-7.JPG', 'gal-8.JPG',
+      ];
+      const [idx, setIdx] = useState(0);
+      const prev = () => setIdx(i => (i - 1 + photos.length) % photos.length);
+      const next = () => setIdx(i => (i + 1) % photos.length);
+
+      return h('div', { style: { display: 'flex', flexDirection: 'column', gap: 12 } },
+        h('img', { src: photos[idx], className: 'gallery-img', alt: `Gallery photo ${idx + 1}` }),
+        h('div', { className: 'gallery-nav' },
+          h('button', { onClick: prev, className: 'gallery-btn', 'aria-label': 'Previous photo' }, '\u2190'),
+          h('span', { className: 'gallery-pos' }, idx + 1, ' / ', photos.length),
+          h('button', { onClick: next, className: 'gallery-btn', 'aria-label': 'Next photo' }, '\u2192')
+        )
+      );
+    }
 
     function Desktop() {
       const [windows, setWindows] = useState([]);
@@ -468,7 +417,6 @@ function Gallery() {
       const zRef   = useRef(10);
       const dragRef = useRef(null);
 
-      /* Clock tick */
       useEffect(() => {
         const tick = setInterval(() =>
           setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }))
@@ -476,7 +424,6 @@ function Gallery() {
         return () => clearInterval(tick);
       }, []);
 
-      /* Drag handlers — works for both mouse and touch */
       useEffect(() => {
         const onMove = (e) => {
           if (!dragRef.current) return;
@@ -503,7 +450,6 @@ function Gallery() {
         };
       }, []);
 
-      /* Window management */
       const bringToFront = (id) => {
         zRef.current += 1;
         const z = zRef.current;
@@ -519,8 +465,6 @@ function Gallery() {
         zRef.current += 1;
         const def = WINS[id];
         const mobile = window.innerWidth < 600;
-        // on mobile: size the window to fit the screen and center it
-        // on desktop: use the default position and size
         const w = mobile ? Math.min(window.innerWidth - 24, def.w) : def.w;
         const h = mobile ? Math.min(window.innerHeight - 100, def.h) : def.h;
         const x = mobile ? (window.innerWidth - w) / 2 : def.x;
@@ -539,90 +483,65 @@ function Gallery() {
         dragRef.current = { id, sx: point.clientX, sy: point.clientY, ox, oy };
       };
 
-      return (
-        <>
-          {/* ── Desktop area — onTouchMove blocks page scroll while dragging ── */}
-          <div id="desktop" onTouchMove={(e) => e.preventDefault()}>
-
-            {/* Icons */}
-            <div className="icon-grid">
-              {ITEMS.map(item => (
-                <div
-                  key={item.id}
-                  className="desk-icon"
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`Open ${item.label}`}
-                  onClick={() => openWindow(item.id)}
-                  onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && openWindow(item.id)}
-                >
-                  <i className={`ti ${item.icon} icon-img`} aria-hidden="true" />
-                  <span className="icon-label">{item.label}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Windows */}
-            {windows.filter(w => !w.minimized).map(win => (
-              <div
-                key={win.id}
-                className="window"
-                style={{ left: win.x, top: win.y, width: win.w, zIndex: win.z }}
-                onMouseDown={() => bringToFront(win.id)}
-                onTouchStart={() => bringToFront(win.id)}
-              >
-                <div
-                  className="window-titlebar"
-                  onMouseDown={(e) => startDrag(e, win.id, win.x, win.y)}
-                  onTouchStart={(e) => startDrag(e, win.id, win.x, win.y)}
-                >
-                  <button className="traffic-btn btn-close"
-                    onClick={(e) => { e.stopPropagation(); closeWin(win.id); }}
-                    aria-label="Close window" />
-                  <button className="traffic-btn btn-min"
-                    onClick={(e) => { e.stopPropagation(); minimizeWin(win.id); }}
-                    aria-label="Minimize window" />
-                  <button className="traffic-btn btn-zoom"
-                    aria-label="Zoom window" />
-                  <span className="window-title">{win.title}</span>
-                </div>
-                <div className="window-body" style={{ height: win.h }}>
-                  {CONTENT[win.id] && CONTENT[win.id]()}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* ── Taskbar ── */}
-          <div id="taskbar">
-            <span className="taskbar-logo">✦</span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.5)', marginRight: 4, fontFamily: 'var(--font-ui)' }}>
-              samsevrOS
-            </span>
-
-            {windows.map(win => (
-              <button
-                key={win.id}
-                className={`taskbar-btn ${win.minimized ? 'minimized' : 'active'}`}
-                onClick={() => {
-                  setWindows(ws => ws.map(w => w.id === win.id ? { ...w, minimized: false } : w));
-                  bringToFront(win.id);
-                }}
-              >
-                {WINS[win.id].title}
-              </button>
-            ))}
-
-            <span className="taskbar-time">{time}</span>
-          </div>
-        </>
+      return h(React.Fragment, null,
+        h('div', { id: 'desktop', onTouchMove: (e) => e.preventDefault() },
+          h('div', { className: 'icon-grid' },
+            ITEMS.map(item =>
+              h('div', {
+                key: item.id, className: 'desk-icon', role: 'button', tabIndex: 0,
+                'aria-label': `Open ${item.label}`,
+                onClick: () => openWindow(item.id),
+                onKeyDown: (e) => (e.key === 'Enter' || e.key === ' ') && openWindow(item.id),
+              },
+                h('span', { className: 'icon-img', 'aria-hidden': 'true' }, item.icon),
+                h('span', { className: 'icon-label' }, item.label)
+              )
+            )
+          ),
+          windows.filter(w => !w.minimized).map(win =>
+            h('div', {
+              key: win.id, className: 'window',
+              style: { left: win.x, top: win.y, width: win.w, zIndex: win.z },
+              onMouseDown: () => bringToFront(win.id),
+              onTouchStart: () => bringToFront(win.id),
+            },
+              h('div', {
+                className: 'window-titlebar',
+                onMouseDown: (e) => startDrag(e, win.id, win.x, win.y),
+                onTouchStart: (e) => startDrag(e, win.id, win.x, win.y),
+              },
+                h('button', { className: 'traffic-btn btn-close', onClick: (e) => { e.stopPropagation(); closeWin(win.id); }, 'aria-label': 'Close window' }),
+                h('button', { className: 'traffic-btn btn-min', onClick: (e) => { e.stopPropagation(); minimizeWin(win.id); }, 'aria-label': 'Minimize window' }),
+                h('button', { className: 'traffic-btn btn-zoom', 'aria-label': 'Zoom window' }),
+                h('span', { className: 'window-title' }, win.title)
+              ),
+              h('div', { className: 'window-body', style: { height: win.h } },
+                CONTENT[win.id] && CONTENT[win.id]()
+              )
+            )
+          )
+        ),
+        h('div', { id: 'taskbar' },
+          h('span', { className: 'taskbar-logo' }, '\u2726'),
+          h('span', { style: { fontSize: 11, color: 'rgba(255,255,255,0.5)', marginRight: 4, fontFamily: 'var(--font-ui)' } }, 'samsevrOS'),
+          windows.map(win =>
+            h('button', {
+              key: win.id,
+              className: `taskbar-btn ${win.minimized ? 'minimized' : 'active'}`,
+              onClick: () => {
+                setWindows(ws => ws.map(w => w.id === win.id ? { ...w, minimized: false } : w));
+                bringToFront(win.id);
+              },
+            }, WINS[win.id].title)
+          ),
+          h('span', { className: 'taskbar-time' }, time)
+        )
       );
     }
 
-    /* Mount */
     const container = document.createElement('div');
     document.body.appendChild(container);
-    ReactDOM.createRoot(container).render(<Desktop />);
+    ReactDOM.createRoot(container).render(h(Desktop));
   </script>
 
 </body>
